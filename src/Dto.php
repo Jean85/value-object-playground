@@ -7,18 +7,19 @@ namespace Jean85\ValueObjectPlayground;
 use Facile\PhpCodec\Decoder;
 use Facile\PhpCodec\Validation\Validation;
 
-/**
- * @template T of Dto
- */
 abstract class Dto
 {
     /**
-     * @return Validation<T>
+     * @return Validation<static>
      */
-    abstract public static function create(mixed $data): Validation;
+    final public static function create(mixed $data): Validation
+    {
+        return static::getDecoder()
+            ->decode($data);
+    }
 
     /**
-     * @return Decoder<mixed, T>
+     * @return Decoder<mixed, static>
      */
     abstract protected static function getDecoder(): Decoder;
 }

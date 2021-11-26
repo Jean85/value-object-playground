@@ -1,0 +1,12 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method Facile\\\\PhpCodec\\\\Validation\\\\Validation\\<Jean85\\\\ValueObjectPlayground\\\\ValueObjects\\\\Age\\>\\:\\:getValue\\(\\)\\.$#"
+			count: 1
+			path: tests/ValueObjects/AgeTest.php
+
+		-
+			message: "#^Call to an undefined method Facile\\\\PhpCodec\\\\Validation\\\\Validation\\<Jean85\\\\ValueObjectPlayground\\\\ValueObjects\\\\FullName\\>\\:\\:getValue\\(\\)\\.$#"
+			count: 1
+			path: tests/ValueObjects/FullNameTest.php
+

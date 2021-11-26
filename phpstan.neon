@@ -4,5 +4,5 @@ parameters:
         - src
         - tests
 
-#includes:
-#    - phpstan-baseline.neon
+includes:
+    - phpstan-baseline.neon

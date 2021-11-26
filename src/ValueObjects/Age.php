@@ -10,28 +10,20 @@ use Facile\PhpCodec\Validation\Context;
 use Facile\PhpCodec\Validation\Validation;
 use Jean85\ValueObjectPlayground\Dto;
 
-/**
- * @template-extends Dto<Age>
- */
-class Age extends Dto
+final class Age extends Dto
 {
     private function __construct(private int $age)
     {
-    }
-
-    public static function create(mixed $data): Validation
-    {
-        return self::getDecoder()
-            ->decode($data);
     }
 
     protected static function getDecoder(): Decoder
     {
         return Decoders::pipe(
             Decoders::int(),
+            /** @psalm-var Decoder<int, self> */
             Decoders::make(
                 fn (int $i, Context $context): Validation => $i >= 42
-                    ? Validation::success(new static($i))
+                    ? Validation::success(new self($i))
                     : Validation::failure($i, $context, 'Age is too low')
             ),
         );
