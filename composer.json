@@ -9,6 +9,7 @@
         }
     ],
     "require": {
+        "php": "^8",
         "facile-it/php-codec": "^0.0.2"
     },
     "require-dev": {

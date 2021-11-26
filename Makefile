@@ -33,7 +33,7 @@ psalm-update-baseline: start
 psalm-clear-cache: start
 	@docker-compose exec -T php ./vendor/bin/psalm --clear-cache
 
-pre-commit-check: code-style-fix psalm phpstan
+pre-commit-check: code-style-fix psalm phpstan test
 
 clear-cache: psalm-clear-cache phpstan-clear-cache
 
