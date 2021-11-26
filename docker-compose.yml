@@ -1,0 +1,85 @@
+version: '3.5'
+
+services:
+  nginx:
+    image: harbor-facile.enter.it/pagamenti/nginx-dev:1.19.7-alpine-2
+    volumes:
+      - ./public:/var/www/pagamenti/public
+      - ./frontend/dist:/var/www/pagamenti-fe
+      - ./csp/csp-headers-staging.conf:/etc/nginx/csp-headers.conf
+    depends_on:
+      - php
+
+  nginx-admin:
+    image: harbor-facile.enter.it/base-images/nginx-unprivileged:1.19.7-alpine
+    volumes:
+      - ./admin/dist:/var/www/pagamenti-admin
+      - ./docker/development/nginx/certs/nginx-selfsigned.crt:/etc/nginx/certs/nginx-selfsigned.crt
+      - ./docker/development/nginx/certs/nginx-selfsigned.key:/etc/nginx/certs/nginx-selfsigned.key
+      - ./docker/development/nginx-admin/conf/pagamenti-admin.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/development/nginx-admin/conf/pagamenti-admin-build.dev.conf:/etc/nginx/conf.d/pagamenti-admin-build.dev.conf
+    expose:
+      - "8443"
+    ports:
+      - "8443"
+    depends_on:
+      - php
+
+  php:
+    image: harbor-facile.enter.it/pagamenti/php-dev:8.0.13
+    user: pagamenti
+    environment:
+      PHP_IDE_CONFIG: "serverName=Pagamenti"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - mysql
+      - elasticmq
+
+  mysql:
+    image: mysql:8.0.21
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pagamenti2
+      TZ: 'Europe/Rome'
+
+  helm:
+    image: harbor-facile.enter.it/common/gitlab-k8s-deployer:1.5
+    volumes:
+      - ./charts/:/home/devops/charts
+      - ./k8s/:/home/devops/k8s
+      - ./bin/deploy/helm-charts.sh:/home/devops/bin/deploy/helm-charts.sh
+    tmpfs:
+      - /home/devops/.cache:uid=1000,gid=1000
+
+  elasticmq:
+    image: softwaremill/elasticmq:0.15.7
+    ports:
+      - '9324:9324'
+
+  # Frontend
+  node:
+    image: harbor-facile.enter.it/pagamenti/node-dev:16.10.0
+    volumes:
+      - ./frontend:/home/node/frontend
+    environment:
+      - CYPRESS_INSTALL_BINARY=0
+
+  # Admin console
+  node-admin:
+    image: harbor-facile.enter.it/pagamenti/node-dev:17.0.0
+    volumes:
+      - ./admin:/home/node/frontend
+    environment:
+      - CYPRESS_INSTALL_BINARY=0
+
+  # Frontend & Admin console integration tests
+  cypress:
+    image: harbor-facile.enter.it/pagamenti/cypress:8.5.0
+    volumes:
+      - ./frontend:/frontend
+      - ./admin:/admin
+    depends_on:
+      - nginx
+    entrypoint: [sh, -c]
+    working_dir: /frontend/tests/integration
