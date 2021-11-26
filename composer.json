@@ -1,0 +1,15 @@
+{
+    "name": "jean85/value-object-playground",
+    "type": "project",
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Jean85\\ValueObjectPlayground\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {}
+}
