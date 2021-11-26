@@ -4,8 +4,65 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee3f7609d7c89c88becfc815c01867eb",
-    "packages": [],
+    "content-hash": "6fdadc7558fc0fe04e7b705472ed4fcb",
+    "packages": [
+        {
+            "name": "facile-it/php-codec",
+            "version": "0.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/facile-it/php-codec.git",
+                "reference": "ee29992d435c6c93eb95a7c2ecb2d95caa0deaf7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/facile-it/php-codec/zipball/ee29992d435c6c93eb95a7c2ecb2d95caa0deaf7",
+                "reference": "ee29992d435c6c93eb95a7c2ecb2d95caa0deaf7",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 | ^8.0"
+            },
+            "require-dev": {
+                "facile-it/facile-coding-standard": "^0.4.1",
+                "giorgiosironi/eris": "^0.12.0",
+                "icomefromthenet/reverse-regex": "^0.1.0",
+                "phpat/phpat": "^0.7.5",
+                "phpunit/php-code-coverage": "^7.0",
+                "phpunit/phpunit": "^8.5",
+                "vimeo/psalm": "4.8.1"
+            },
+            "suggest": {
+                "ext-json": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Facile\\PhpCodec\\": "src/"
+                },
+                "files": [
+                    "src/functions.php",
+                    "src/Internal/utils.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ilario Pierbattista",
+                    "email": "pierbattista.ilario@gmail.com"
+                }
+            ],
+            "description": "A partial porting of io-ts in PHP",
+            "support": {
+                "issues": "https://github.com/facile-it/php-codec/issues",
+                "source": "https://github.com/facile-it/php-codec/tree/0.0.2"
+            },
+            "time": "2021-08-13T15:33:06+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",
