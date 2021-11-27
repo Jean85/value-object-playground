@@ -8,6 +8,9 @@ use Facile\PhpCodec\Decoder;
 use Facile\PhpCodec\Decoders;
 use Jean85\ValueObjectPlayground\Dto;
 
+/**
+ * @extends Dto<FullName>
+ */
 final class FullName extends Dto
 {
     private function __construct(
